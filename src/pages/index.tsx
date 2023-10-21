@@ -1,11 +1,24 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect } from 'react'
 import { Inter } from 'next/font/google'
+import { invoke } from '@tauri-apps/api/tauri'
 import styles from '@/styles/Home.module.css'
+import { Button, Typography } from '@mui/joy';
+import { DefaultLayout } from '@/layouts/DefaultLayout';
 
 const inter = Inter({ subsets: ['latin'] })
 
+
 export default function Home() {
+
+  useEffect(() => {
+    invoke('close_splashscreen')
+    invoke('greet', { name: 'World' })
+      .then(console.log)
+      .catch(console.error)
+  }, [])
+
   return (
     <>
       <Head>
@@ -14,101 +27,135 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
+      <DefaultLayout>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
+        <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida arcu. Libero enim sed faucibus turpis. Libero justo laoreet sit amet cursus. Ultrices in iaculis nunc sed augue lacus viverra vitae. Sollicitudin aliquam ultrices sagittis orci. At lectus urna duis convallis convallis tellus. Elit pellentesque habitant morbi tristique senectus et netus et. Adipiscing elit ut aliquam purus sit. Luctus accumsan tortor posuere ac ut consequat semper viverra. Ipsum consequat nisl vel pretium lectus quam id leo in. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit scelerisque. Dignissim enim sit amet venenatis urna. Sed blandit libero volutpat sed cras ornare. Eu mi bibendum neque egestas congue quisque. Condimentum vitae sapien pellentesque habitant. Quis viverra nibh cras pulvinar mattis nunc sed. Rhoncus mattis rhoncus urna neque viverra justo nec ultrices dui. Varius morbi enim nunc faucibus a pellentesque sit.
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
+          Elementum sagittis vitae et leo duis. Mattis aliquam faucibus purus in massa tempor nec feugiat. Aliquet bibendum enim facilisis gravida neque. Turpis massa sed elementum tempus egestas sed. Dolor sit amet consectetur adipiscing. Eget sit amet tellus cras adipiscing. Lectus nulla at volutpat diam. Congue nisi vitae suscipit tellus mauris a. Dolor sed viverra ipsum nunc. Risus pretium quam vulputate dignissim suspendisse in est ante in. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant. Mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan.
 
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
+          Nibh venenatis cras sed felis. In arcu cursus euismod quis viverra. Nec sagittis aliquam malesuada bibendum. Viverra nibh cras pulvinar mattis nunc sed blandit libero. Posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Urna cursus eget nunc scelerisque viverra mauris in aliquam sem. Amet venenatis urna cursus eget nunc scelerisque viverra mauris in. Elit eget gravida cum sociis natoque. Magna etiam tempor orci eu lobortis. Dictum varius duis at consectetur lorem donec massa. Mattis rhoncus urna neque viverra justo nec ultrices. Elit ullamcorper dignissim cras tincidunt lobortis feugiat.
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+          Facilisis leo vel fringilla est ullamcorper eget. Suspendisse sed nisi lacus sed viverra tellus in hac habitasse. Malesuada nunc vel risus commodo viverra maecenas accumsan. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. Metus aliquam eleifend mi in nulla posuere sollicitudin. Sed vulputate odio ut enim blandit volutpat maecenas volutpat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra. Nibh ipsum consequat nisl vel pretium lectus quam id. Ultrices neque ornare aenean euismod elementum nisi quis eleifend. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue. Posuere urna nec tincidunt praesent semper feugiat nibh sed pulvinar. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus.
+
+          Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo. Vitae et leo duis ut diam. Arcu cursus euismod quis viverra nibh. Massa tempor nec feugiat nisl pretium fusce id. Mauris ultrices eros in cursus turpis. At ultrices mi tempus imperdiet. Tempor orci dapibus ultrices in. Fusce ut placerat orci nulla pellentesque. Condimentum id venenatis a condimentum vitae. Commodo elit at imperdiet dui accumsan sit. Pharetra massa massa ultricies mi. Nec ultrices dui sapien eget mi. Dolor magna eget est lorem ipsum dolor. Massa enim nec dui nunc.
+
+          Quisque sagittis purus sit amet volutpat consequat mauris. Aenean pharetra magna ac placerat vestibulum lectus mauris. Scelerisque felis imperdiet proin fermentum leo vel. Mi quis hendrerit dolor magna eget est lorem ipsum dolor. Morbi leo urna molestie at elementum eu facilisis. Consequat nisl vel pretium lectus quam id leo. A pellentesque sit amet porttitor. Gravida arcu ac tortor dignissim convallis aenean. Quis enim lobortis scelerisque fermentum dui faucibus in ornare. Id ornare arcu odio ut sem. Quam lacus suspendisse faucibus interdum posuere lorem ipsum dolor. Sed tempus urna et pharetra. Tellus integer feugiat scelerisque varius morbi enim nunc. Leo duis ut diam quam nulla porttitor.
+
+          Vitae proin sagittis nisl rhoncus mattis rhoncus urna neque. Ultrices in iaculis nunc sed. Quam id leo in vitae turpis massa sed elementum. Ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim. Dignissim diam quis enim lobortis scelerisque fermentum. Nec feugiat in fermentum posuere urna nec tincidunt. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis nisl. Donec et odio pellentesque diam. Tortor dignissim convallis aenean et tortor at risus viverra. Neque aliquam vestibulum morbi blandit cursus risus at ultrices. Nullam non nisi est sit amet facilisis magna. Orci eu lobortis elementum nibh.
+
+          Non pulvinar neque laoreet suspendisse. Ultrices vitae auctor eu augue ut lectus arcu. Tempor nec feugiat nisl pretium fusce id velit ut tortor. Ut ornare lectus sit amet est placerat. Nunc sed blandit libero volutpat sed cras ornare. Dictumst quisque sagittis purus sit amet. Arcu odio ut sem nulla pharetra diam. In dictum non consectetur a erat nam at lectus urna. At tellus at urna condimentum. Nisi scelerisque eu ultrices vitae auctor. Morbi leo urna molestie at elementum. Lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt. A lacus vestibulum sed arcu non odio euismod.
+
+          Cursus sit amet dictum sit amet justo donec enim diam. Tempor commodo ullamcorper a lacus vestibulum sed arcu non odio. Tincidunt dui ut ornare lectus. In eu mi bibendum neque egestas congue quisque. In metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Urna cursus eget nunc scelerisque viverra mauris in aliquam. Urna et pharetra pharetra massa massa ultricies mi. Amet luctus venenatis lectus magna. Ut tristique et egestas quis ipsum suspendisse. Lacus vel facilisis volutpat est velit egestas dui id ornare. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam erat. Libero justo laoreet sit amet cursus sit amet dictum sit. Commodo odio aenean sed adipiscing diam donec adipiscing tristique risus. Sapien faucibus et molestie ac feugiat. Augue interdum velit euismod in. Pharetra convallis posuere morbi leo urna. Praesent tristique magna sit amet purus gravida quis blandit.
+
+          Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Adipiscing commodo elit at imperdiet dui accumsan sit amet nulla. Diam maecenas sed enim ut sem viverra. Neque laoreet suspendisse interdum consectetur. Urna porttitor rhoncus dolor purus non enim praesent elementum. Elit scelerisque mauris pellentesque pulvinar. Nisl vel pretium lectus quam id leo in vitae turpis. Porttitor massa id neque aliquam vestibulum morbi blandit. Rhoncus dolor purus non enim praesent elementum facilisis. A cras semper auctor neque vitae tempus. Rutrum quisque non tellus orci ac. Malesuada fames ac turpis egestas sed tempus urna et pharetra. Orci a scelerisque purus semper. Mus mauris vitae ultricies leo integer malesuada nunc vel risus. Faucibus scelerisque eleifend donec pretium. Leo a diam sollicitudin tempor id eu nisl nunc mi. Lorem mollis aliquam ut porttitor leo a. Neque ornare aenean euismod elementum nisi.
+
+          Porttitor lacus luctus accumsan tortor posuere ac ut. Pellentesque nec nam aliquam sem et tortor. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse. Euismod elementum nisi quis eleifend quam adipiscing vitae. Mattis rhoncus urna neque viverra justo. Placerat vestibulum lectus mauris ultrices eros in cursus turpis massa. Posuere morbi leo urna molestie at elementum eu facilisis sed. Aliquet nec ullamcorper sit amet risus. Diam volutpat commodo sed egestas egestas. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Odio facilisis mauris sit amet. Diam phasellus vestibulum lorem sed risus ultricies tristique nulla.
+
+          Pellentesque habitant morbi tristique senectus et netus et malesuada fames. Habitant morbi tristique senectus et netus et. Sagittis eu volutpat odio facilisis. Et netus et malesuada fames ac turpis egestas sed tempus. Donec pretium vulputate sapien nec sagittis. Non consectetur a erat nam at lectus. Dui vivamus arcu felis bibendum ut tristique et. Adipiscing commodo elit at imperdiet dui accumsan sit amet nulla. Interdum velit laoreet id donec ultrices tincidunt. Enim diam vulputate ut pharetra sit amet aliquam. Pretium viverra suspendisse potenti nullam ac tortor vitae. Nibh cras pulvinar mattis nunc. Eget nunc scelerisque viverra mauris in aliquam sem. Turpis nunc eget lorem dolor sed. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Et netus et malesuada fames ac turpis egestas maecenas pharetra.
+
+          Lectus urna duis convallis convallis tellus id interdum velit. Varius sit amet mattis vulputate enim nulla aliquet. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Egestas integer eget aliquet nibh praesent tristique magna. Viverra ipsum nunc aliquet bibendum enim. Eu tincidunt tortor aliquam nulla facilisi. Augue eget arcu dictum varius duis at. Tincidunt id aliquet risus feugiat in ante metus dictum at. Sed cras ornare arcu dui vivamus.
+
+          Ut faucibus pulvinar elementum integer enim neque volutpat ac. Tellus at urna condimentum mattis. Proin sed libero enim sed. Auctor urna nunc id cursus metus aliquam eleifend mi in. Dictum varius duis at consectetur lorem donec massa sapien. Quisque sagittis purus sit amet. Commodo viverra maecenas accumsan lacus vel. Sed viverra tellus in hac. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit amet. Ac turpis egestas sed tempus urna et pharetra pharetra. Dui vivamus arcu felis bibendum ut tristique. Non pulvinar neque laoreet suspendisse interdum consectetur. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Maecenas pharetra convallis posuere morbi leo. Nunc mattis enim ut tellus elementum sagittis. Turpis egestas pretium aenean pharetra.
+
+          Felis eget velit aliquet sagittis id consectetur purus. Malesuada fames ac turpis egestas. Cursus metus aliquam eleifend mi in nulla posuere sollicitudin. Et malesuada fames ac turpis. Porta lorem mollis aliquam ut porttitor. Sit amet consectetur adipiscing elit pellentesque. Mauris sit amet massa vitae. Elit pellentesque habitant morbi tristique senectus. Posuere sollicitudin aliquam ultrices sagittis. Aliquam ut porttitor leo a. Dictum non consectetur a erat. Mi proin sed libero enim. Pharetra massa massa ultricies mi. Pulvinar elementum integer enim neque.</Typography>
+        <Button>Add</Button>
+      </DefaultLayout>
+      {/*<main className={`${styles.main} ${inter.className}`}>*/}
+      {/*  <div className={styles.description}>*/}
+      {/*    <p>*/}
+      {/*      Get started by editing&nbsp;*/}
+      {/*      <code className={styles.code}>src/pages/index.tsx</code>*/}
+      {/*    </p>*/}
+      {/*    <div>*/}
+      {/*      <a*/}
+      {/*        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"*/}
+      {/*        target="_blank"*/}
+      {/*        rel="noopener noreferrer"*/}
+      {/*      >*/}
+      {/*        By{' '}*/}
+      {/*        <Image*/}
+      {/*          src="/vercel.svg"*/}
+      {/*          alt="Vercel Logo"*/}
+      {/*          className={styles.vercelLogo}*/}
+      {/*          width={100}*/}
+      {/*          height={24}*/}
+      {/*          priority*/}
+      {/*        />*/}
+      {/*      </a>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+
+      {/*  <div className={styles.center}>*/}
+      {/*    <Image*/}
+      {/*      className={styles.logo}*/}
+      {/*      src="/next.svg"*/}
+      {/*      alt="Next.js Logo"*/}
+      {/*      width={180}*/}
+      {/*      height={37}*/}
+      {/*      priority*/}
+      {/*    />*/}
+      {/*  </div>*/}
+
+      {/*  <div className={styles.grid}>*/}
+      {/*    <a*/}
+      {/*      href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"*/}
+      {/*      className={styles.card}*/}
+      {/*      target="_blank"*/}
+      {/*      rel="noopener noreferrer"*/}
+      {/*    >*/}
+      {/*      <h2>*/}
+      {/*        Docs <span>-&gt;</span>*/}
+      {/*      </h2>*/}
+      {/*      <p>*/}
+      {/*        Find in-depth information about Next.js features and&nbsp;API.*/}
+      {/*      </p>*/}
+      {/*    </a>*/}
+
+      {/*    <a*/}
+      {/*      href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"*/}
+      {/*      className={styles.card}*/}
+      {/*      target="_blank"*/}
+      {/*      rel="noopener noreferrer"*/}
+      {/*    >*/}
+      {/*      <h2>*/}
+      {/*        Learn <span>-&gt;</span>*/}
+      {/*      </h2>*/}
+      {/*      <p>*/}
+      {/*        Learn about Next.js in an interactive course with&nbsp;quizzes!*/}
+      {/*      </p>*/}
+      {/*    </a>*/}
+
+      {/*    <a*/}
+      {/*      href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"*/}
+      {/*      className={styles.card}*/}
+      {/*      target="_blank"*/}
+      {/*      rel="noopener noreferrer"*/}
+      {/*    >*/}
+      {/*      <h2>*/}
+      {/*        Templates <span>-&gt;</span>*/}
+      {/*      </h2>*/}
+      {/*      <p>*/}
+      {/*        Discover and deploy boilerplate example Next.js&nbsp;projects.*/}
+      {/*      </p>*/}
+      {/*    </a>*/}
+
+      {/*    <a*/}
+      {/*      href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"*/}
+      {/*      className={styles.card}*/}
+      {/*      target="_blank"*/}
+      {/*      rel="noopener noreferrer"*/}
+      {/*    >*/}
+      {/*      <h2>*/}
+      {/*        Deploy <span>-&gt;</span>*/}
+      {/*      </h2>*/}
+      {/*      <p>*/}
+      {/*        Instantly deploy your Next.js site to a shareable URL*/}
+      {/*        with&nbsp;Vercel.*/}
+      {/*      </p>*/}
+      {/*    </a>*/}
+      {/*  </div>*/}
+      {/*</main>*/}
     </>
   )
 }

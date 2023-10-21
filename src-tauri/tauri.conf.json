@@ -1,0 +1,85 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "build": {
+    "beforeBuildCommand": "npm run build && npm run export",
+    "beforeDevCommand": "npm run dev",
+    "devPath": "http://localhost:3000",
+    "distDir": "../out"
+  },
+  "package": {
+    "productName": "codedino",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false
+    },
+    "bundle": {
+      "active": true,
+      "category": "DeveloperTool",
+      "copyright": "",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "identifier": "com.codedino.app",
+      "longDescription": "",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "A community-driven developer toolbox for frontend developers",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "width": 1152,
+        "height": 700,
+        "minWidth": 1152,
+        "minHeight": 700,
+        "resizable": true,
+        "visible": false,
+        "center": true,
+        "focus": true,
+        "alwaysOnTop": true,
+        "title": "codedino"
+      },
+      {
+        "width": 500,
+        "height": 350,
+        "url": "splash.html",
+        "label": "splashscreen",
+        "center": true,
+        "resizable": false,
+        "hiddenTitle": true,
+        "titleBarStyle": "Transparent",
+        "theme": "Dark",
+        "decorations": false,
+        "alwaysOnTop": true
+      }
+    ]
+  }
+}
