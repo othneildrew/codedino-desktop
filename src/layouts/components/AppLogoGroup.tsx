@@ -1,9 +1,12 @@
 import Image from 'next/image';
-import { Typography } from '@mui/joy';
+import { Text } from '@mantine/core';
+import { Group } from '@mantine/core';
 
 export const AppLogoGroup = () => (
-  <>
-    <Image src="/logo.png" alt="codedino" width={132} height={32} />
-    <Typography sx={{ mt: 0.625 }} level="body3">A community-driven developer toolbox for frontend developers</Typography>
-  </>
-)
+  <Group align='center'>
+    <Image src='/logo.png' alt='codedino' width={132} height={32} />
+    <Text size='sm' c='dimmed'>
+      A community-driven developer toolbox for frontend developers
+    </Text>
+  </Group>
+);

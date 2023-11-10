@@ -1,10 +1,10 @@
-import { Tab, tabClasses, TabList, Tabs } from '@mui/joy';
+import { Tab, tabClasses, TabList, Tabs } from '@mui/joy'
 
 export const SettingsTabs = () => {
   return (
-    <Tabs aria-label="tabs" defaultValue={0}>
+    <Tabs aria-label='tabs' defaultValue={0}>
       <TabList
-        variant="plain"
+        variant='plain'
         sx={{
           '--List-padding': '0px',
           '--List-radius': '0px',
@@ -31,5 +31,5 @@ export const SettingsTabs = () => {
         <Tab>Support</Tab>
       </TabList>
     </Tabs>
-  );
+  )
 }

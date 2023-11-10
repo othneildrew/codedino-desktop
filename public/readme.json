@@ -1,0 +1,87 @@
+{
+  "showTableOfContents": true,
+  "backToTopPosition": "right",
+  "badgeStyle": "flat-square",
+  "name": "Best-README-Template",
+  "description": "An awesome README template to jumpstart your projects!",
+  "license": "MIT",
+  "private": true,
+  "logoUrl": "",
+  "version": "1.0.0",
+  "changelog": "CHANGELOG.md",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "keywords": ["example", "package.json", "node", "npm"],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com",
+    "url": "https://www.example.com"
+  },
+  "contributors": [
+    {
+      "name": "Contributor 1",
+      "email": "contributor1@example.com"
+    },
+    {
+      "name": "Contributor 2",
+      "email": "contributor2@example.com"
+    }
+  ],
+  "homepage": "https://github.com/yourusername/example-package#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/example-package.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/example-package/issues",
+    "email": "bugs@example.com"
+  },
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
+  },
+  "os": ["linux", "macos", "windows"],
+  "cpu": ["x64", "arm64"],
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/yourusername"
+  },
+  "files": [
+    "src/",
+    "dist/",
+    "public/"
+  ],
+  "directories": {
+    "lib": "lib",
+    "doc": "docs"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "redux": "^4.1.1"
+  },
+  "optionalDependencies": {
+    "optional-module": "^1.0.0"
+  },
+  "bundledDependencies": ["dependency-1", "dependency-2"],
+  "bundleDependencies": ["bundle-1", "bundle-2"],
+  "dependencies": {
+    "express": "^4.17.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "eslint": "^7.32.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts-info": "Additional information about scripts",
+  "repository-info": "Additional information about the repository",
+  "homepage-info": "Additional information about the homepage",
+  "bugs-info": "Additional information about bugs",
+  "license-info": "Additional information about the license"
+}

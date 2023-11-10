@@ -1,7 +1,8 @@
-import { styled } from '@mui/joy';
-import { ReactNode } from 'react';
+import { styled } from '@mui/joy'
+import { ReactNode } from 'react'
 
-const Container = styled('div')(({ theme }) => `
+const Container = styled('div')(
+  ({ theme }) => `
   z-index: 9999;
   position: fixed;
   top: 0;
@@ -11,16 +12,15 @@ const Container = styled('div')(({ theme }) => `
   border-bottom: 2px solid ${theme.palette.divider};
   background-color: red;
   opacity: 0.4
-`);
+`
+)
 
 export interface AppBarProps {
-  children?: ReactNode;
+  children?: ReactNode
 }
 
 export const AppBar = ({ children }: AppBarProps) => {
-  const a = '';
+  const a = ''
 
-  return (
-    <Container>{children}</Container>
-  );
+  return <Container>{children}</Container>
 }

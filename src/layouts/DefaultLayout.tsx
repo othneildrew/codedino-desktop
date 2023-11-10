@@ -1,49 +1,145 @@
-import { styled, Typography } from '@mui/joy';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { AppLogoGroup } from '@/layouts/components/AppLogoGroup';
 import { AppNavigation } from '@/layouts/components/AppNavigation';
 import { AppBar } from '@/layouts/components/AppBar';
-
-
-const Container = styled('div')`
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  //overflow: hidden;
-`;
-
-const Aside = styled('aside')(({ theme }) => `
-  flex-shrink: 0;
-  padding: 20px;
-  width: 240px;
-  height: auto;
-  overflow-y: auto;
-  border-right: 2px solid ${theme.palette.divider};
-`);
-
-const Main = styled('main')`
-  position: relative;
-  overflow-y: auto;
-  width: 100%;
-  height: auto;
-`;
+import {
+  AppShell,
+  Burger,
+  Group,
+  Modal,
+  ScrollArea,
+  Skeleton,
+  Text,
+  Stack,
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { InputBase, Input, Combobox, useCombobox, Button } from '@mantine/core';
 
 export interface DefaultLayoutProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
-export const DefaultLayout = ({ children }) => {
+export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+  const [opened, { toggle }] = useDisclosure();
+  const [workspaceModalOpen, { toggle: toggleWorkspaceModal }] =
+    useDisclosure(false);
+  const [isCreateWorkspace, setIsCreatingWorkspace] = useState(false);
+
+  const workspaces: string[] = [];
+
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const options = workspaces?.map((item) => (
+    <Combobox.Option value={item} key={item}>
+      {item}
+    </Combobox.Option>
+  ));
+
+  const [value, setValue] = useState<string | null>(null);
+
+  const handleNewWorkspaceClick = () => {};
+
   return (
-    <Container>
-      <Aside>
-        <AppLogoGroup />
-        <AppNavigation />
-      </Aside>
-      {/*<div style={{ width: '100%', border: '1px solid orange' }}>*/}
-      {/*  <AppBar />*/}
-        <Main>{children}</Main>
-      {/*</div>*/}
-    </Container>
-  )
-}
+    <>
+      <AppShell
+        header={{ height: 60 }}
+        navbar={{
+          width: 240,
+          breakpoint: 'sm',
+          collapsed: { mobile: !opened },
+        }}
+        padding='sm'
+      >
+        <AppShell.Header>
+          <Group h='100%' px='sm' justify='space-between'>
+            {/*<Burger opened={opened} onClick={toggle} hiddenFrom='sm' size='sm' />*/}
+            <AppLogoGroup />
+            <Combobox
+              store={combobox}
+              onOptionSubmit={(val) => {
+                setValue(val);
+                combobox.closeDropdown();
+              }}
+            >
+              <Combobox.Target>
+                <InputBase
+                  component='button'
+                  pointer
+                  rightSection={<Combobox.Chevron />}
+                  onClick={() => combobox.toggleDropdown()}
+                  style={{ minWidth: 260 }}
+                >
+                  {value || (
+                    <Input.Placeholder>Select a workspace</Input.Placeholder>
+                  )}
+                </InputBase>
+              </Combobox.Target>
+
+              <Combobox.Dropdown>
+                {workspaces.length === 0 ? (
+                  <Combobox.Empty>
+                    You don't have any workspaces. Workspaces help you organize
+                    related projects.
+                    <Button my='sm' onClick={() => toggleWorkspaceModal()}>
+                      Create workspace
+                    </Button>
+                  </Combobox.Empty>
+                ) : (
+                  <>
+                    <Combobox.Options mah={200} style={{ overflowY: 'auto' }}>
+                      {options}
+                    </Combobox.Options>
+                    <Combobox.Footer>
+                      <Button
+                        fullWidth
+                        variant='subtle'
+                        color='gray'
+                        justify='flex-start'
+                        onClick={() => toggleWorkspaceModal()}
+                      >
+                        New workspace
+                      </Button>
+                    </Combobox.Footer>
+                  </>
+                )}
+              </Combobox.Dropdown>
+            </Combobox>
+          </Group>
+        </AppShell.Header>
+        <AppShell.Navbar p='sm'>
+          {/*<AppShell.Section>APPS</AppShell.Section>*/}
+          <AppShell.Section grow my='sm' component={ScrollArea}>
+            <AppNavigation />
+          </AppShell.Section>
+          <AppShell.Section>
+            <Stack gap='xs'>
+              <Text size='xs' c='dimmed'>
+                Contribute
+              </Text>
+              <Text size='xs' c='dimmed'>
+                Leave Feedback
+              </Text>
+              <Text size='xs' c='dimmed'>
+                About
+              </Text>
+            </Stack>
+          </AppShell.Section>
+        </AppShell.Navbar>
+        <AppShell.Main>{children}</AppShell.Main>
+      </AppShell>
+      <Modal
+        opened={workspaceModalOpen}
+        onClose={() => toggleWorkspaceModal()}
+        title='Create new workspace'
+      >
+        <Input placeholder='acme-corp' />
+        <Button fullWidth mt='sm' disabled>
+          Save
+        </Button>
+      </Modal>
+    </>
+  );
+};

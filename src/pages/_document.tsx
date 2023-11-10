@@ -1,12 +1,13 @@
 import { Html, Head, Main, NextScript } from 'next/document'
-import { getInitColorSchemeScript } from '@mui/joy/styles'
+import { ColorSchemeScript } from '@mantine/core'
 
 export default function Document() {
   return (
-    <Html lang="en">
-      <Head />
+    <Html lang='en'>
+      <Head>
+        <ColorSchemeScript defaultColorScheme='dark' />
+      </Head>
       <body>
-        {getInitColorSchemeScript({ defaultMode: 'dark' })}
         <Main />
         <NextScript />
       </body>
