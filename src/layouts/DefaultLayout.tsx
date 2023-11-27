@@ -20,7 +20,10 @@ export interface DefaultLayoutProps {
   children?: ReactNode;
 }
 
-export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+export const DefaultLayout = ({
+  children,
+  appShellMainRef,
+}: DefaultLayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
   const [workspaceModalOpen, { toggle: toggleWorkspaceModal }] =
     useDisclosure(false);
@@ -117,9 +120,6 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
           <AppShell.Section>
             <Stack gap='xs'>
               <Text size='xs' c='dimmed'>
-                Contribute
-              </Text>
-              <Text size='xs' c='dimmed'>
                 Leave Feedback
               </Text>
               <Text size='xs' c='dimmed'>
@@ -128,7 +128,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
             </Stack>
           </AppShell.Section>
         </AppShell.Navbar>
-        <AppShell.Main>{children}</AppShell.Main>
+        <AppShell.Main ref={appShellMainRef}>{children}</AppShell.Main>
       </AppShell>
       <Modal
         opened={workspaceModalOpen}

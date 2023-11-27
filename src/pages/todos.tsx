@@ -15,7 +15,10 @@ import {
   Card,
   Tabs,
   Badge,
+  Container,
+  Flex,
 } from '@mantine/core';
+import { useElementSize } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { DefaultLayout } from '@/layouts/DefaultLayout';
 import { useRouter } from 'next/router';
@@ -26,6 +29,7 @@ import {
   IconCircleCheck,
   IconX,
   IconDiamondsFilled,
+  IconArrowBackUp,
   IconPencil,
   IconCheck,
 } from '@tabler/icons-react';
@@ -37,30 +41,59 @@ interface TodoProps {
   createdAt: number;
   deletedAt?: number | null;
   completedAt?: number | null;
+  completed?: boolean;
   onComplete?: () => void;
+  onDelete?: () => void;
+  onEdit?: () => void;
+  onUncompleted?: () => void;
 }
 
-const TodoCard = ({ text, tags, onComplete }: TodoProps) => {
+const TodoCard = ({
+  text,
+  tags,
+  completed,
+  onComplete,
+  onDelete,
+  onEdit,
+  onUncompleted,
+}: TodoProps) => {
   const [hovering, setHovering] = useState(false);
   const handleMarkComplete = () => {};
 
   return (
     <Card
       padding='xs'
-      style={{ border: '1px solid transparent', marginBottom: 8 }}
+      style={{ border: '1px solid transparent' }}
       onMouseOver={() => setHovering(true)}
       onMouseOut={() => setHovering(false)}
     >
       <Group justify='space-between' align='center'>
         <Group align='center' gap='xs'>
-          <IconX size={16} />
-          <IconPencil size={16} />
+          {completed ? (
+            <IconArrowBackUp
+              size={16}
+              cursor='pointer'
+              onClick={() => onUncompleted?.()}
+            />
+          ) : (
+            <IconX size={16} cursor='pointer' onClick={() => onDelete?.()} />
+          )}
+          {!completed && (
+            <IconPencil size={16} cursor='pointer' onClick={() => onEdit?.()} />
+          )}
           <Badge color='red' size='xs' radius='sm'>
             High
           </Badge>
-          <Text>{text}</Text>
+          <Text
+            td={completed ? 'line-through' : undefined}
+            c={completed ? 'dimmed' : undefined}
+          >
+            {text}
+          </Text>
         </Group>
-        <IconCheck cursor='pointer' onClick={() => onComplete?.()} />
+        {!completed && (
+          <IconCheck cursor='pointer' onClick={() => onComplete?.()} />
+        )}
       </Group>
     </Card>
   );
@@ -70,6 +103,7 @@ export default function Todos() {
   const workspace = useWorkspaceContext();
   const router = useRouter();
   const [inputText, setInputText] = useState('');
+  const { ref, width } = useElementSize();
   // const [todos, setTodos] = useState<Todo[]>([
   //   {
   //     text: 'This is a todo item that will be done later',
@@ -82,6 +116,19 @@ export default function Todos() {
   // ]);
 
   const todos = useLiveQuery<Todo[]>(() => db.todos.toArray());
+
+  const activeTodos = useMemo(
+    () =>
+      todos?.filter(
+        (t) => t?.completedAt === undefined || t?.completedAt === null
+      ),
+    [todos]
+  );
+
+  const completedTodos = useMemo(
+    () => todos?.filter((t) => t?.completedAt && t?.completedAt > 0),
+    [todos]
+  );
 
   // const currentTab = useMemo(() => router.query.tab as string, [router.query]);
   //
@@ -97,7 +144,6 @@ export default function Todos() {
         tags: [],
         customOrder: null,
         createdAt: Date.now(),
-        deletedAt: null,
         completedAt: null,
       });
     } catch (err) {
@@ -108,17 +154,27 @@ export default function Todos() {
     setInputText('');
   };
 
-  const handleMarkComplete = (id: Todo['id']) => {};
+  const handleMarkComplete = (id: Todo['id']) => {
+    db.todos.where({ id: id! }).modify({ completedAt: Date.now() });
+  };
 
-  const handleRemoveItem = () => {};
+  const handleMarkUncompleted = (id: Todo['id']) => {
+    console.log('mark uncompleted');
+    db.todos.where({ id: id! }).modify({ completedAt: null });
+  };
+
+  const handleRemoveItem = async (id: Todo['id']) => {
+    db.todos.where({ id: id! }).delete();
+  };
 
   useEffect(() => {
     console.log('t:::', todos);
     console.log('workspace:::', workspace);
-  }, [todos, workspace]);
+    console.log('width:::', width);
+  }, [todos, width, workspace]);
 
   return (
-    <DefaultLayout>
+    <DefaultLayout appShellMainRef={ref}>
       {/*<DragDropContext onDragEnd={handleDragEnd}>*/}
       {/*  <Droppable droppableId='todos-list' direction='vertical'>*/}
       {/*    {(provided, snapshot) => (*/}
@@ -153,18 +209,46 @@ export default function Todos() {
           <Tabs.Tab value='done'>Done</Tabs.Tab>
         </Tabs.List>
 
+        <Tabs.Panel value='done'>
+          <Stack gap='xs' style={{ paddingBottom: 58 }}>
+            {completedTodos?.map((todoProps) => (
+              <TodoCard
+                completed
+                key={todoProps.text}
+                {...todoProps}
+                onComplete={() => handleMarkComplete(todoProps.id)}
+                onDelete={() => handleRemoveItem(todoProps.id)}
+                onUncompleted={() => handleMarkUncompleted(todoProps.id)}
+              />
+            ))}
+          </Stack>
+        </Tabs.Panel>
+
         <Tabs.Panel value='active'>
-          {todos?.map((todoProps) => (
-            <TodoCard
-              key={todoProps.text}
-              {...todoProps}
-              onComplete={() => handleMarkComplete(todoProps.id)}
-            />
-          ))}
+          <Stack gap='xs' style={{ paddingBottom: 58 }}>
+            {activeTodos?.map((todoProps) => (
+              <TodoCard
+                key={todoProps.text}
+                {...todoProps}
+                onComplete={() => handleMarkComplete(todoProps.id)}
+                onDelete={() => handleRemoveItem(todoProps.id)}
+              />
+            ))}
+          </Stack>
+
           <Affix position={{ bottom: 0, left: 240 }}>
-            <Paper withBorder p='xs' radius='xs' style={{ width: '800px' }}>
-              <Group grow gap='xs'>
+            <Paper
+              withBorder
+              p='xs'
+              radius='xs'
+              style={{
+                marginLeft: -1,
+                width: `calc(${width}px + 24px + 2px)`,
+              }}
+            >
+              <Flex gap='xs'>
                 <TextInput
+                  style={{ flexGrow: 1 }}
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyDown={(e) => {
@@ -175,13 +259,13 @@ export default function Todos() {
                 />
                 <Button
                   color='dino-green'
-                  style={{ maxWidth: 80 }}
+                  style={{ width: 120 }}
                   onClick={handleAddItem}
                 >
                   {/*Add <Kbd size='xs'>Enter</Kbd>*/}
                   Add
                 </Button>
-              </Group>
+              </Flex>
             </Paper>
           </Affix>
         </Tabs.Panel>
